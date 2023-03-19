@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Hot-Cold Game</title>
+</head>
+<body>
+    <div id="game">
+        <h1>Hot ~ Cold Game</h1>
+        <h3 id="instructionsLabel">Instructions:</h3>
+        <p id="instructions">
+            The goal of this game is that you try to guess the number that is in the framed box, to do this you must enter a number between 1 and 100, in the input box and click the guess button.
+            <br><br>
+            If the number is close you will see a <strong>hot</strong> message but if it is far away you will see <strong>cold</strong>
+            <br><br>
+            You have a maximum of 10 tries.
+            <br><br>
+        </p>
+        <label id="luck">Good luck!</label>
+        <div class="result">
+            <br>
+            <label id="labelTrail">Trail:</label>
+            <p id="trail"></p>
+        </div>
+        <br>
+        <div id="guessBox">
+            <input type="text" name="numberInput" id="numberInput">
+            <button type="button" id="guesButton" style="display: inline-block;">Guess</button>
+            <button type="button" style="display: none;" id="btnAgain">Try again</button>
+        </div>
+        <br><br>
+        <div class="result">
+            <label id="resultMessage"></label>
+        </div>
+    </div>
+    <p class="lastResult"></p>
+    <script type="text/javascript">
+
+        let randomNumber = 0;
+        let getNumber = 0;
+        let counter=0;
+        let tip = "";
+        
+        function guessNumber()
+        {
+            if(getNumber == 0)
+            {
+                randomNumber = Math.floor(Math.random() * 100) + 1;
+                getNumber = 1;
+            }
+            var numberCheck = Number(numberInput.value);
+            
+            // initial validation of the number fill
+            if(isNaN(numberCheck) || numberCheck == '' || numberCheck<0)
+            {
+                if (isNaN(numberCheck)) {
+                    document.querySelector('#resultMessage').innerText = 'Error, the value should be a number!';
+                }
+                else if(numberCheck == '')
+                {
+                    document.querySelector('#resultMessage').innerText = 'Error, the fill shouldn´t be empty!';
+                }
+                else if(numberCheck<0)
+                {
+                    document.querySelector('#resultMessage').innerText = 'Error, the fill shouldn´t be less than 0!';
+                }
+            }
+            else
+            {
+                for(i=0;i<10;i++)
+                {
+                    if((numberCheck==randomNumber) && (counter<10))
+                    {
+                        document.querySelector('#resultMessage').innerText = 'Congrats, you do it!';
+                        document.querySelector('#trail').innerText = '';
+                        document.getElementById('guesButton').style.display = 'none';
+                        document.getElementById('btnAgain').style.display = 'inline-block';
+                        counter++;
+                        break;
+                    }
+                    else if(counter==9)
+                    {
+                        document.querySelector('#resultMessage').innerText = 'Sorry, you loose :( , but you can try again';
+                        document.getElementById('guesButton').style.display = 'none';
+                        document.getElementById('btnAgain').style.display = 'inline-block';
+                        tips();
+                        return false;
+                    }
+                    else
+                    {
+                        document.querySelector('#resultMessage').innerText = 'Ups the number is wrong!';
+                        tips();
+                        counter++;
+                        return false;
+                    }
+                }
+                function tips()
+                {
+                    if ((numberCheck <= (randomNumber+15)) && (numberCheck >= (randomNumber-15)))
+                    {
+                        document.querySelector('#trail').innerText = 'Hot';
+                    }
+                    else
+                    {
+                        document.querySelector('#trail').innerText = 'Cold';
+                    }
+                }
+            }
+        }
+        function tryAgain()
+        {
+            document.getElementById('guesButton').style.display = 'inline-block';
+            document.getElementById('btnAgain').style.display = 'none';
+            counter=0;
+            getNumber = 0;
+            document.querySelector('#trail').innerText = '';
+            document.querySelector('#resultMessage').innerText = '';
+            document.querySelector('#numberInput').value = '';
+        }
+        guesButton.addEventListener('click',guessNumber);
+        btnAgain.addEventListener('click',tryAgain);
+    </script>
+</body>
+</html>
