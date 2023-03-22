@@ -41,21 +41,19 @@
     </div>
     <p class="lastResult"></p>
     <script type="text/javascript">
-
         let randomNumber = 0;
         let getNumber = 0;
         let counter=0;
         let tip = "";
-        
+        //  Function guessNumber thats check if the number writed is right
         function guessNumber()
         {
             if(getNumber == 0)
             {
-                randomNumber = Math.floor(Math.random() * 100) + 1;
-                getNumber = 1;
+                randomNumber    = Math.floor(Math.random() * 100) + 1;
+                getNumber       = 1;
             }
             var numberCheck = Number(numberInput.value);
-            
             // initial validation of the number fill
             if(isNaN(numberCheck) || numberCheck == '' || numberCheck<0)
             {
@@ -71,7 +69,7 @@
                     document.querySelector('#resultMessage').innerText = 'Error, the fill shouldn´t be less than 0!';
                 }
             }
-            else
+            else // Start the game
             {
                 for(i=0;i<10;i++)
                 {
@@ -82,7 +80,6 @@
                         document.getElementById('guesButton').style.display = 'none';
                         document.getElementById('btnAgain').style.display = 'inline-block';
                         document.querySelector('#trail').style.color = 'green';
-
                         counter++;
                         break;
                     }
@@ -117,6 +114,8 @@
                 }
             }
         }
+
+        // Function tryAgain if the game end the game can be restarted
         function tryAgain()
         {
             document.getElementById('guesButton').style.display = 'inline-block';
@@ -127,6 +126,8 @@
             document.querySelector('#resultMessage').innerText = '';
             document.querySelector('#numberInput').value = '';
         }
+
+        //  Actions buttons
         guesButton.addEventListener('click',guessNumber);
         btnAgain.addEventListener('click',tryAgain);
     </script>
