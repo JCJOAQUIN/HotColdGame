@@ -25,7 +25,7 @@
         <label id="luck">Good luck!</label>
         <div class="result">
             <br>
-            <label id="labelTrail">Trail:</label>
+            <label id="labelTrail">You are:</label>
             <p id="trail"></p>
         </div>
         <br>
@@ -81,6 +81,8 @@
                         document.querySelector('#trail').innerText = '';
                         document.getElementById('guesButton').style.display = 'none';
                         document.getElementById('btnAgain').style.display = 'inline-block';
+                        document.querySelector('#trail').style.color = 'green';
+
                         counter++;
                         break;
                     }
@@ -105,10 +107,12 @@
                     if ((numberCheck <= (randomNumber+15)) && (numberCheck >= (randomNumber-15)))
                     {
                         document.querySelector('#trail').innerText = 'Hot';
+                        document.querySelector('#trail').style.color = 'red';
                     }
                     else
                     {
                         document.querySelector('#trail').innerText = 'Cold';
+                        document.querySelector('#trail').style.color = 'blue';
                     }
                 }
             }
